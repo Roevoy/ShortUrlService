@@ -49,8 +49,12 @@ namespace ShortUrlService.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] string originalUrl)
         {
-            var shortUrl = await _shortUrlService.CreateShortUrlAsync(originalUrl, GetCurrentUserId());
-            return CreatedAtAction(nameof(GetByCode), new { code = shortUrl.ShortCode }, shortUrl);
+            if (await _shortUrlService.IsUniqueAsync(originalUrl))
+            {
+                var shortUrl = await _shortUrlService.CreateShortUrlAsync(originalUrl, GetCurrentUserId());
+                return CreatedAtAction(nameof(GetByCode), new { code = shortUrl.ShortCode }, shortUrl);
+            }
+            return BadRequest($"The {originalUrl} have already used.");
         }
 
         [HttpDelete("{id:guid}")]

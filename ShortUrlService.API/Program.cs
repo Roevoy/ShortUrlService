@@ -32,9 +32,6 @@ namespace ShortUrlService.API
            .AddEntityFrameworkStores<AppDbContext>()
            .AddDefaultTokenProviders();
 
-
-
-
             builder.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy =>

@@ -7,6 +7,7 @@ namespace ShortUrlService.DAL.Interfaces.Repositories
     {
         Task<ShortUrl> GetByIdAsync(Guid id);
         Task<ShortUrl> GetByCodeAsync(string code);
+        Task<ShortUrl> GetByOriginalUrlAsync(string originalUrl);
         Task<IEnumerable<ShortUrl>> GetAllAsync();
         Task<IEnumerable<ShortUrlListDto>> GetAllDtosAsync();
         Task AddAsync(ShortUrl shortUrl);

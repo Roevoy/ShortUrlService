@@ -50,6 +50,16 @@ namespace ShortUrlService.Application.Services
             return await _shortUrlRepository.GetByIdAsync(id);
         }
 
+        public async Task<bool> IsUniqueAsync(string url)
+        {
+            try
+            {
+                await _shortUrlRepository.GetByOriginalUrlAsync(url);
+                return false;
+            }
+            catch (KeyNotFoundException) { return true; }
+        }
+
         private string GenerateShortCode()
         {
             return Guid.NewGuid().ToString("N")[..6];

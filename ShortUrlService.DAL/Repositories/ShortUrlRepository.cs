@@ -51,5 +51,11 @@ namespace ShortUrlService.DAL.Repositories
             return await _context.ShortUrls.FindAsync(id) 
                 ?? throw new KeyNotFoundException($"Url with ID {id} is not found.");
         }
+
+        public async Task<ShortUrl> GetByOriginalUrlAsync(string originalUrl)
+        {
+            return await _context.ShortUrls.FirstOrDefaultAsync(url => url.OriginalUrl == originalUrl)
+                ?? throw new KeyNotFoundException($"Url with url {originalUrl} is not found."); ;
+        }
     }
 }

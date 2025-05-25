@@ -28,7 +28,7 @@ export class ShortUrlCreateComponent {
 
     this.shortUrlService.createShortUrl(originalUrl).subscribe({
       next: (newUrl) => this.created.emit(newUrl),
-      error: () => alert('Refference creation error')
+      error: () => alert("Failed to create new short URL")
     });
   }
 }
