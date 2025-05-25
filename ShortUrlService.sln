@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortUrlService.Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortUrlService.DTOs", "ShortUrlService.DTOs\ShortUrlService.DTOs.csproj", "{19128C44-322E-4571-96CD-D758E30E583A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortUrlService.Tests", "ShortUrlService.Tests\ShortUrlService.Tests.csproj", "{D2BFEA52-9521-486B-9FD4-A89A8221B1B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{19128C44-322E-4571-96CD-D758E30E583A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19128C44-322E-4571-96CD-D758E30E583A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19128C44-322E-4571-96CD-D758E30E583A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2BFEA52-9521-486B-9FD4-A89A8221B1B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2BFEA52-9521-486B-9FD4-A89A8221B1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2BFEA52-9521-486B-9FD4-A89A8221B1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2BFEA52-9521-486B-9FD4-A89A8221B1B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

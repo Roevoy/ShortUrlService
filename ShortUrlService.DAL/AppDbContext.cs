@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShortUrlService.Core.Models;
+using ShortUrlService.DAL.Migrations;
 
 namespace ShortUrlService.DAL
 {
@@ -10,6 +11,7 @@ namespace ShortUrlService.DAL
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<ShortUrl> ShortUrls => Set<ShortUrl>();
+        public DbSet<AboutTextEntity> AboutTexts { get; set; }
     }
 }
 

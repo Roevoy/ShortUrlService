@@ -8,6 +8,7 @@ using ShortUrlService.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ShortUrlService.Application.Services;
 
 namespace ShortUrlService.API
 {
@@ -21,7 +22,6 @@ namespace ShortUrlService.API
             var key = builder.Configuration["Jwt:Key"];
             var issuer = builder.Configuration["Jwt:Issuer"];
 
-            // Используем только IdentityCore (без Cookie)
             builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -62,7 +62,6 @@ namespace ShortUrlService.API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
                 };
 
-                // Возвращать 401 без редиректа
                 options.Events = new JwtBearerEvents
                 {
                     OnChallenge = context =>
@@ -81,6 +80,8 @@ namespace ShortUrlService.API
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddScoped<IAboutRepository, AboutRepository>();
+            builder.Services.AddScoped<IAboutService, AboutService>();
             builder.Services.AddScoped<IShortUrlRepository, ShortUrlRepository>();
             builder.Services.AddScoped<IShortUrlService, Application.Services.ShortUrlService>();
 
@@ -112,7 +113,7 @@ namespace ShortUrlService.API
             app.UseAuthorization();
 
             app.MapControllers();
-            app.MapFallbackToFile("index.html"); // Angular маршруты
+            app.MapFallbackToFile("index.html"); // Angular 
 
             app.MapControllerRoute(
                 name: "default",

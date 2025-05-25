@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ShortUrlService.API.Models;
+using System.Diagnostics;
 
 namespace ShortUrlService.API.Controllers
 {
@@ -11,7 +11,7 @@ namespace ShortUrlService.API.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult React() => View();
-        public IActionResult Angular() => View();
+        //public IActionResult React() => View();
+        //public IActionResult Angular() => View();
     }
 }

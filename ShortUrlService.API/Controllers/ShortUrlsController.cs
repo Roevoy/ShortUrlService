@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ShortUrlService.Application.Interfaces;
 using System.Security.Claims;
-using System;
 
 namespace ShortUrlService.API.Controllers
 {
