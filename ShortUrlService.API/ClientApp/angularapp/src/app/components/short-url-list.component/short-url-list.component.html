@@ -1,0 +1,24 @@
+<app-short-url-create-button (created)="onShortUrlCreated($event)"></app-short-url-create-button>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<table *ngIf="shortUrls.length > 0" class="url-table">
+  <thead>
+    <tr>
+      <th>Original URL</th>
+      <th>Short Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of shortUrls">
+      <td>{{ item.originalUrl }}</td>
+      <td>{{ item.shortCode }}</td>
+      <td *ngIf="authService.hasRole('User')">
+        <a [routerLink]="['/details', item.shortCode]" class="info-btn">Info</a>
+      </td>
+      <td *ngIf="authService.hasRole('User')"> 
+        <a class="delete-btn" (click)="onDelete($event, item.shortCode)">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="shortUrls.length === 0 && !error">Data is absent</div>

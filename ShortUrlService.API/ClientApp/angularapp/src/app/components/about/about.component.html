@@ -1,0 +1,10 @@
+<div class="about-container">
+  <h2 class="about-title">About</h2>
+
+  <p *ngIf="!isAdmin" class="about-text">{{ aboutText }}</p>
+
+  <div *ngIf="isAdmin" class="admin-editor">
+    <textarea [(ngModel)]="aboutText" rows="6" class="form-control about-textarea"></textarea>
+    <button (click)="save()" class="btn btn-primary save-button">Save</button>
+  </div>
+</div>

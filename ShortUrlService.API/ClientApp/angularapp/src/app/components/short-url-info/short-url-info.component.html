@@ -1,0 +1,8 @@
+<div *ngIf="error" class="error">{{ error }}</div>
+<div *ngIf="url">
+  <h2>Info about {{ url.shortCode }}</h2>
+  <p><strong>Original URL:</strong> {{ url.originalUrl }}</p>
+  <p><strong>Created by:</strong> {{ url.createdBy }}</p>
+  <p><strong>Created at:</strong> {{ url.createdDate | date:'short' }}</p>
+</div>
+<button (click)="goBack()">Back</button>

@@ -1,0 +1,38 @@
+.url-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+  .url-table th, .url-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+.info-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+  .info-btn:hover {
+    background-color: #218838;
+  }
+
+.delete-btn {
+  background-color: #b53b3b;
+  color: white;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+  .delete-btn:hover {
+    background-color: #934c4c;
+  }
