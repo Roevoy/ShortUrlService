@@ -1,0 +1,19 @@
+<header class="app-header">
+  <div class="header-content">
+    <h1 class="header-title">Hey, it's my test project!</h1>
+
+    <div class="button-group">
+      <button *ngIf="!isLoggedIn && getCurrentRoute() !== '/'" (click)="goToLogin()" class="auth-btn">
+        Login
+      </button>
+
+      <button *ngIf="isLoggedIn" (click)="authService.logout()" class="auth-btn">
+        Logout
+      </button>
+
+      <button *ngIf="!isLoggedIn && getCurrentRoute() !== '/about'" (click)="goToAbout()" class="auth-btn">
+        About
+      </button>
+    </div>
+  </div>
+</header>

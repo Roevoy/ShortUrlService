@@ -13,12 +13,18 @@ namespace ShortUrlService.DAL.Repositories
         }
         public async Task<string> GetAboutText()
         {
+#if DEBUG
+            await Task.Delay(2000);
+#endif
             var entity = await _context.AboutTexts.FirstOrDefaultAsync();
             return entity?.Text ?? string.Empty;
         }
 
         public async Task SetAboutText(string text)
         {
+#if DEBUG
+            await Task.Delay(2000);
+#endif
             var entity = await _context.AboutTexts.FirstOrDefaultAsync();
             if (entity == null)
             {

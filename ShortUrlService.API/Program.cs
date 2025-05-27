@@ -88,7 +88,7 @@ namespace ShortUrlService.API
 
             app.UseHttpsRedirection();
 
-            var angularDistPath = Path.Combine(builder.Environment.ContentRootPath, "ClientApp", "angularapp", "dist", "angularapp", "browser");
+            var angularDistPath = Path.Combine(builder.Environment.ContentRootPath, "Client", "dist", "angularapp", "browser");
 
             app.UseDefaultFiles(new DefaultFilesOptions
             {
