@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../enviroment';
@@ -18,14 +18,8 @@ export class AuthService {
 
   constructor() 
   { 
-    if (this.getUserRoles().length > 0)
-    {
-      this.isLoggedInSubject.next(true);
-    }
-    else
-    {
-      this.isLoggedInSubject.next(false);
-    }
+    if (this.getUserRoles().length > 0) this.isLoggedInSubject.next(true);
+    else this.isLoggedInSubject.next(false);
   }
 
   getToken(): string | null {
@@ -49,10 +43,12 @@ export class AuthService {
   }
 
   login(email: string, password: string): void {
-    const url = new URL('auth/login', environment.backendUrl).toString();
+    this.loginErrorDescription = '';
+    
+    const url = new URL('auth/login', environment.backendApi).toString();
     const body = { email, password };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.loginErrorDescription = '';
+
     this.http.post<LoginResponse>(url, body, { headers }).subscribe(
       {
         next: (response) => 
@@ -60,7 +56,7 @@ export class AuthService {
             localStorage.setItem(this.tokenKey, response.token);
             this.isLoggedInSubject.next(true);
           },
-        error: (error) => { this.loginErrorDescription = error.message ? error.message : "Login error"; }
+        error: (error) => { this.loginErrorDescription = error.message; }
       }
     )
   }
