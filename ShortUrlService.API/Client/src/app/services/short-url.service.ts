@@ -14,12 +14,12 @@ export class ShortUrlService {
 
   getAll(): Observable<ShortUrlLight[]>
   {
-    const url = new URL('shorturls/light', environment.backendApi).toString();
+    const url = this.buildUrl('shorturls/light');
     return this.http.get<ShortUrlLight[]>(url);
   }
 
   createShortUrl(originalUrl: string) : Observable<ShortUrl> {
-    const url = new URL('shorturls', environment.backendApi).toString();
+    const url = this.buildUrl('shorturls')
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
@@ -28,12 +28,16 @@ export class ShortUrlService {
   }
 
   getByCode(code: string): Observable<ShortUrl> {
-    const url = new URL(`shorturls/details/${code}`, environment.backendApi).toString();
+    const url = this.buildUrl(`shorturls/details/${code}`);
     return this.http.get<ShortUrl>(url);
   }
 
   deleteShortUrl(id: string): Observable<void> {
-    const url = new URL(`shorturls/${id}`, environment.backendApi).toString();
+    const url = this.buildUrl(`shorturls/${id}`);
     return this.http.delete<void>(url);
+  }
+
+  buildUrl(route: string): string {
+    return new URL(route, environment.backendApi).toString();
   }
 }
