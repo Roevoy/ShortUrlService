@@ -17,7 +17,7 @@
         <h1>Short URL Service</h1>
     </header>
     <main>
-        @if (Model.UserRoles.Contains("Admin"))
+        @if (Context.User.IsInRole("Admin"))
         {
             <form method="post" asp-action="/SetAbout">
                 <textarea name="text">@Model.Text</textarea>

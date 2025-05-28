@@ -102,7 +102,7 @@ namespace ShortUrlService.API
                 RequestPath = ""
             });
 
-
+            app.UseMiddleware<JwtMiddleware>(); 
 
             app.UseRouting();
 
