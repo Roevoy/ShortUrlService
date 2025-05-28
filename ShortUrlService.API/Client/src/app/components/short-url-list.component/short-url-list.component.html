@@ -1,4 +1,4 @@
-<app-short-url-create-button (created)="onShortUrlCreated($event)"></app-short-url-create-button>
+<app-short-url-create-button (createdNewShortUrl)="onShortUrlCreated($event)"></app-short-url-create-button>
 <div *ngIf="error" class="error">{{ error }}</div>
 
 <table *ngIf="shortUrls.length > 0" class="url-table">

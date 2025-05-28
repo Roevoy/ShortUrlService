@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShortUrlService } from '../../services/short-url.service';
 import { ShortUrl } from '../../models/short-url';
@@ -11,21 +11,21 @@ import { CommonModule } from '@angular/common';
   templateUrl: './short-url-info.component.html',
   styleUrl: './short-url-info.component.css'
 })
+
 export class ShortUrlInfoComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private shortUrlService: ShortUrlService = inject(ShortUrlService);
+
   url: ShortUrl | null = null;
   error = '';
 
-  constructor(
-    private route: ActivatedRoute,
-    private shortUrlService: ShortUrlService
-  ) { }
+  constructor( ) { }
 
   ngOnInit() {
     const code = this.route.snapshot.paramMap.get('code')!;
-    console.log(code);
     this.shortUrlService.getByCode(code).subscribe({
       next: u => this.url = u,
-      error: () => this.error = 'Failed to download detailes.'
+      error: (error) => this.error = error.message
     });
   }
 

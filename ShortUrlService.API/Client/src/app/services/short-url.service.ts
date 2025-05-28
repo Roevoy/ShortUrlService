@@ -7,10 +7,14 @@ import { environment } from '../enviroment';
 
 @Injectable({ providedIn: 'root' })
 export class ShortUrlService {
-
+  
   private http: HttpClient = inject(HttpClient);
-
+  
   constructor() { }
+  
+  private buildUrl(route: string): string {
+    return new URL(route, environment.backendApi).toString();
+  }
 
   getAll(): Observable<ShortUrlLight[]>
   {
@@ -37,7 +41,4 @@ export class ShortUrlService {
     return this.http.delete<void>(url);
   }
 
-  buildUrl(route: string): string {
-    return new URL(route, environment.backendApi).toString();
-  }
 }

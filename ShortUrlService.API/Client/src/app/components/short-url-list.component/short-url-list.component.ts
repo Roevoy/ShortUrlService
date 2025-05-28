@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ShortUrlLight } from '../../models/short-url-light';
 import { ShortUrlService } from '../../services/short-url.service';
 import { CommonModule } from '@angular/common';
@@ -13,11 +13,14 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './short-url-list.component.html',
   styleUrls: ['./short-url-list.component.css']
 })
+
 export class ShortUrlListComponent implements OnInit {
+  private shortUrlService: ShortUrlService = inject(ShortUrlService);
+  authService: AuthService = inject(AuthService)
   shortUrls: ShortUrlLight[] = [];
   error = '';
 
-  constructor(private shortUrlService: ShortUrlService, public authService: AuthService) { }
+  constructor() { }
 
   ngOnInit() {
     this.loadUrls();
@@ -26,12 +29,11 @@ export class ShortUrlListComponent implements OnInit {
   loadUrls() {
     this.shortUrlService.getAll().subscribe({
       next: data => this.shortUrls = data,
-      error: () => this.error = 'Downloading page error'
+      error: (error) => this.error = error.message
     });
   }
 
-  onShortUrlCreated(newUrl: ShortUrlLight) {    this.shortUrls.unshift(newUrl);
-  }
+  onShortUrlCreated(newUrl: ShortUrlLight) { this.shortUrls.unshift(newUrl);}
 
   onDelete(event: Event, code: string): void {
     event.preventDefault();
@@ -44,14 +46,12 @@ export class ShortUrlListComponent implements OnInit {
             this.shortUrls = this.shortUrls.filter(u => u.shortCode !== code);
           },
           error: err => {
-            alert("Delete error");
-            console.error('Delete error:', err);
+            alert(err.message);
           }
         });
       },
       error: err => {
-        alert("Get by code error");
-        console.error('Get by code error:', err);
+        alert(err.message);
       }
     });
   }

@@ -30,12 +30,13 @@ export class HeaderComponent {
     this.router.navigate(['']); 
   }
 
-  goToAbout(): void {
+  goToSpaAbout(): void {
     this.router.navigate(['/about']);
   }
 
    goToRazorAbout(): void {
-    window.location.href = 'http://localhost:5114/about?token='+this.authService.getToken();
+    const url = `http://localhost:5114/about?token=${this.authService.getToken()}`;
+    window.location.href = url;
   }
 
   ngOnDestroy(): void {
