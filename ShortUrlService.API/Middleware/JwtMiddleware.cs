@@ -15,9 +15,16 @@ public class JwtMiddleware
         if (context.Request.Query.ContainsKey("token"))
         {
             string token = context.Request.Query["token"];
-            List<string> roles = GetUserRoles(token);
-            var identity = new ClaimsIdentity(roles.Select(role => new Claim(ClaimTypes.Role, role)), "Bearer");
-            context.User = new ClaimsPrincipal(identity);
+            if (!String.IsNullOrEmpty(token))
+            {
+                try
+                {
+                    List<string> roles = GetUserRoles(token);
+                    var identity = new ClaimsIdentity(roles.Select(role => new Claim(ClaimTypes.Role, role)), "Bearer");
+                    context.User = new ClaimsPrincipal(identity);
+                }
+                catch (Exception) { }
+            }
         }
         await _next(context);
     }

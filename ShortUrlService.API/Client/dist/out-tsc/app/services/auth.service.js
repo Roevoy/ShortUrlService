@@ -11,7 +11,14 @@ let AuthService = class AuthService {
     isLoggedInSubject = new BehaviorSubject(false);
     isLoggedIn$ = this.isLoggedInSubject.asObservable();
     loginErrorDescription = '';
-    constructor() { }
+    constructor() {
+        if (this.getUserRoles().length > 0) {
+            this.isLoggedInSubject.next(true);
+        }
+        else {
+            this.isLoggedInSubject.next(false);
+        }
+    }
     getToken() {
         return localStorage.getItem(this.tokenKey);
     }

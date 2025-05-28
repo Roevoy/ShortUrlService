@@ -16,7 +16,17 @@ export class AuthService {
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
   loginErrorDescription = '';
 
-  constructor() { }
+  constructor() 
+  { 
+    if (this.getUserRoles().length > 0)
+    {
+      this.isLoggedInSubject.next(true);
+    }
+    else
+    {
+      this.isLoggedInSubject.next(false);
+    }
+  }
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
@@ -50,7 +60,7 @@ export class AuthService {
             localStorage.setItem(this.tokenKey, response.token);
             this.isLoggedInSubject.next(true);
           },
-        error: (error: HttpErrorResponse) => { this.loginErrorDescription = error.message ? error.message : "Login error"; }
+        error: (error) => { this.loginErrorDescription = error.message ? error.message : "Login error"; }
       }
     )
   }
