@@ -95,7 +95,7 @@ namespace ShortUrlService.API
                 FileProvider = new PhysicalFileProvider(angularDistPath),
                 RequestPath = ""
             });
-
+            app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(angularDistPath),
@@ -111,10 +111,6 @@ namespace ShortUrlService.API
 
             app.MapControllers();
             app.MapFallbackToFile("index.html"); // Angular 
-
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Angular}");
 
             app.Run();
         }

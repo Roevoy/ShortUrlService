@@ -50,7 +50,7 @@ export class AuthService {
             localStorage.setItem(this.tokenKey, response.token);
             this.isLoggedInSubject.next(true);
           },
-        error: (error: HttpErrorResponse) => { this.loginErrorDescription = error.statusText ? error.statusText : "Login error"; }
+        error: (error: HttpErrorResponse) => { this.loginErrorDescription = error.message ? error.message : "Login error"; }
       }
     )
   }

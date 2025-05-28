@@ -11,7 +11,7 @@
         Logout
       </button>
 
-      <button *ngIf="!isLoggedIn && getCurrentRoute() !== '/about'" (click)="goToAbout()" class="auth-btn">
+      <button *ngIf="getCurrentRoute() !== '/about'" (click)="goToRazorAbout()" class="auth-btn">
         About
       </button>
     </div>

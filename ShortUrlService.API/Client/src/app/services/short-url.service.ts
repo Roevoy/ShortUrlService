@@ -1,30 +1,38 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 import { ShortUrlLight } from '../models/short-url-light';
 import { ShortUrl } from '../models/short-url';
+import { environment } from '../enviroment';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ShortUrlService {
-  private baseUrl = '/api/shorturl';
-  constructor(private http: HttpClient) { }
+
+  private http: HttpClient = inject(HttpClient);
+  private authService = inject(AuthService);
+
+  constructor() { }
 
   getAll(): Observable<ShortUrlLight[]>
   {
-    return this.http.get<ShortUrlLight[]>('http://localhost:5114/api/shorturls/light');
+    const url = new URL('shorturls/light', environment.backendUrl).toString();
+    return this.http.get<ShortUrlLight[]>(url);
   }
-  createShortUrl(originalUrl: string) {
-    return this.http.post<ShortUrlLight>(
-      'http://localhost:5114/api/shorturls',
+
+  createShortUrl(originalUrl: string) : Observable<ShortUrl> {
+    const url = new URL('shorturls', environment.backendUrl).toString();
+    return this.http.post<ShortUrl>(url,
       originalUrl,
       {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${this.authService.getToken()}`
         }
       }
-    );
+    )
   }
+
   getByCode(code: string): Observable<ShortUrl> {
     return this.http.get<ShortUrl>(
       'http://localhost:5114/api/shorturls/details/'+code,

@@ -1,20 +1,22 @@
 import { __decorate } from "tslib";
-import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../enviroment';
+import { AuthService } from './auth.service';
 let ShortUrlService = class ShortUrlService {
-    http;
-    baseUrl = '/api/shorturl';
-    constructor(http) {
-        this.http = http;
-    }
+    http = inject(HttpClient);
+    authService = inject(AuthService);
+    constructor() { }
     getAll() {
-        return this.http.get('http://localhost:5114/api/shorturls/light');
+        const url = new URL('shorturls/light', environment.backendUrl).toString();
+        return this.http.get(url);
     }
     createShortUrl(originalUrl) {
-        return this.http.post('http://localhost:5114/api/shorturls', originalUrl, {
+        const url = new URL('shorturls', environment.backendUrl).toString();
+        return this.http.post(url, originalUrl, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${this.authService.getToken()}`
             }
         });
     }

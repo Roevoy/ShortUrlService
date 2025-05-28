@@ -34,6 +34,10 @@ export class HeaderComponent {
     this.router.navigate(['/about']);
   }
 
+   goToRazorAbout(): void {
+    window.location.href = 'http://localhost:5114/about?token='+this.authService.getToken();
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }

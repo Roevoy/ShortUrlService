@@ -37,7 +37,7 @@ let AuthService = class AuthService {
                 localStorage.setItem(this.tokenKey, response.token);
                 this.isLoggedInSubject.next(true);
             },
-            error: (error) => { this.loginErrorDescription = error.statusText ? error.statusText : "Login error"; }
+            error: (error) => { this.loginErrorDescription = error.message ? error.message : "Login error"; }
         });
     }
     logout() {

@@ -1,0 +1,42 @@
+﻿@using ShortUrlService.API.Models.MVC;
+@model About
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    
+    <link rel="stylesheet" href="/css/style.css">
+
+
+</head>
+<body>
+    <header>
+        <h1>Short URL Service</h1>
+    </header>
+    <main>
+        @if (Model.UserRoles.Contains("Admin"))
+        {
+            <form method="post" asp-action="/SetAbout">
+                <textarea name="text">@Model.Text</textarea>
+                <button type="submit">Save</button>
+            </form>
+
+            @if (ViewData["Message"] != null)
+            {
+                <p style="color: green;">@ViewData["Message"]</p>
+            }
+        }
+        else
+        {
+            <h2>About</h2>
+            <p>@Model.Text</p>
+        }
+    </main>
+    <footer>
+        <p>&copy; @DateTime.Now.Year Short URL Service. All rights secured.</p>
+    </footer>
+</body>
+</html>

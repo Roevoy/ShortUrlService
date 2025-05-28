@@ -20,6 +20,9 @@ let HeaderComponent = class HeaderComponent {
     goToAbout() {
         this.router.navigate(['/about']);
     }
+    goToRazorAbout() {
+        window.location.href = 'http://localhost:5114/about?token=' + this.authService.getToken();
+    }
     ngOnDestroy() {
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
