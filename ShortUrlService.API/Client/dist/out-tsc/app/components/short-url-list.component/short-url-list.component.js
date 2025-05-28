@@ -1,29 +1,26 @@
 import { __decorate } from "tslib";
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ShortUrlService } from '../../services/short-url.service';
 import { CommonModule } from '@angular/common';
 import { ShortUrlCreateComponent } from '../short-url-create-button.component/short-url-create-button.component';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 let ShortUrlListComponent = class ShortUrlListComponent {
-    shortUrlService;
-    authService;
+    shortUrlService = inject(ShortUrlService);
+    authService = inject(AuthService);
     shortUrls = [];
     error = '';
-    constructor(shortUrlService, authService) {
-        this.shortUrlService = shortUrlService;
-        this.authService = authService;
-    }
+    constructor() { }
     ngOnInit() {
         this.loadUrls();
     }
     loadUrls() {
         this.shortUrlService.getAll().subscribe({
             next: data => this.shortUrls = data,
-            error: () => this.error = 'Downloading page error'
+            error: (error) => this.error = error.message
         });
     }
-    onShortUrlCreated(newUrl) {
-        this.shortUrls.unshift(newUrl);
-    }
+    onShortUrlCreated(newUrl) { this.shortUrls.unshift(newUrl); }
     onDelete(event, code) {
         event.preventDefault();
         this.shortUrlService.getByCode(code).subscribe({
@@ -34,14 +31,12 @@ let ShortUrlListComponent = class ShortUrlListComponent {
                         this.shortUrls = this.shortUrls.filter(u => u.shortCode !== code);
                     },
                     error: err => {
-                        alert("Delete error");
-                        console.error('Delete error:', err);
+                        alert(err.message);
                     }
                 });
             },
             error: err => {
-                alert("Get by code error");
-                console.error('Get by code error:', err);
+                alert(err.message);
             }
         });
     }

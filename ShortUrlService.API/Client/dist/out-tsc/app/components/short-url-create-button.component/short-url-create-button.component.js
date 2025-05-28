@@ -1,28 +1,29 @@
 import { __decorate } from "tslib";
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { ShortUrlService } from '../../services/short-url.service';
 import { CommonModule } from '@angular/common';
 let ShortUrlCreateComponent = class ShortUrlCreateComponent {
-    authService;
-    shortUrlService;
-    created = new EventEmitter();
-    constructor(authService, shortUrlService) {
-        this.authService = authService;
-        this.shortUrlService = shortUrlService;
-    }
+    createdNewShortUrl = new EventEmitter();
+    shortUrlService = inject(ShortUrlService);
+    authService = inject(AuthService);
+    constructor() { }
     onCreateClick(event) {
         event.preventDefault();
         const originalUrl = prompt('Enter original URL');
-        if (!originalUrl)
-            return;
-        this.shortUrlService.createShortUrl(originalUrl).subscribe({
-            next: (newUrl) => this.created.emit(newUrl),
-            error: () => alert("Failed to create new short URL")
-        });
+        if (originalUrl) {
+            this.shortUrlService.createShortUrl(originalUrl).subscribe({
+                next: (newUrl) => this.createdNewShortUrl.emit(newUrl),
+                error: (error) => alert(error.message)
+            });
+        }
+        else
+            alert("URL cannot be empty");
     }
 };
 __decorate([
     Output()
-], ShortUrlCreateComponent.prototype, "created", void 0);
+], ShortUrlCreateComponent.prototype, "createdNewShortUrl", void 0);
 ShortUrlCreateComponent = __decorate([
     Component({
         selector: 'app-short-url-create-button',

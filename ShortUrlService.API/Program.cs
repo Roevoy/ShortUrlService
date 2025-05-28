@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ShortUrlService.Application.Services;
+using ShortUrlService.API.Middleware;
 
 namespace ShortUrlService.API
 {
@@ -102,6 +103,7 @@ namespace ShortUrlService.API
                 RequestPath = ""
             });
 
+            app.UseMiddleware<ExceptionHandlingMiddleware>(); 
             app.UseMiddleware<JwtMiddleware>(); 
 
             app.UseRouting();

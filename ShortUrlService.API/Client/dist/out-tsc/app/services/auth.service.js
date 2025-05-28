@@ -12,12 +12,10 @@ let AuthService = class AuthService {
     isLoggedIn$ = this.isLoggedInSubject.asObservable();
     loginErrorDescription = '';
     constructor() {
-        if (this.getUserRoles().length > 0) {
+        if (this.getUserRoles().length > 0)
             this.isLoggedInSubject.next(true);
-        }
-        else {
+        else
             this.isLoggedInSubject.next(false);
-        }
     }
     getToken() {
         return localStorage.getItem(this.tokenKey);
@@ -35,16 +33,16 @@ let AuthService = class AuthService {
         return this.getUserRoles().some(role => role.trim() === requiredRole);
     }
     login(email, password) {
-        const url = new URL('auth/login', environment.backendUrl).toString();
+        this.loginErrorDescription = '';
+        const url = new URL('auth/login', environment.backendApi).toString();
         const body = { email, password };
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        this.loginErrorDescription = '';
         this.http.post(url, body, { headers }).subscribe({
             next: (response) => {
                 localStorage.setItem(this.tokenKey, response.token);
                 this.isLoggedInSubject.next(true);
             },
-            error: (error) => { this.loginErrorDescription = error.message ? error.message : "Login error"; }
+            error: (error) => { this.loginErrorDescription = error.message; }
         });
     }
     logout() {

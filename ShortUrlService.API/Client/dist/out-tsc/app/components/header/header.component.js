@@ -17,11 +17,12 @@ let HeaderComponent = class HeaderComponent {
     goToLogin() {
         this.router.navigate(['']);
     }
-    goToAbout() {
+    goToSpaAbout() {
         this.router.navigate(['/about']);
     }
     goToRazorAbout() {
-        window.location.href = 'http://localhost:5114/about?token=' + this.authService.getToken();
+        const url = `http://localhost:5114/about?token=${this.authService.getToken()}`;
+        window.location.href = url;
     }
     ngOnDestroy() {
         this.subscriptions.forEach(sub => sub.unsubscribe());
