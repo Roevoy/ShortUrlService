@@ -17,13 +17,13 @@
     <main>
         @if (Context.User.IsInRole("Admin"))
         {
-            <form method="post" asp-action="/SetAbout">
+            <form method="post" asp-action="about">
                 <textarea name="text">@Model.Text</textarea>
                 <button type="submit">Save</button>
             </form>
-            @if (ViewData["Message"] != null)
+            @if (!string.IsNullOrEmpty(Model.Message))
             {
-                <p style="color: green;">@ViewData["Message"]</p>
+                <p style="color: green;">@Model.Message</p>
             }
         }
         else

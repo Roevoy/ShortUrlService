@@ -21,13 +21,17 @@ namespace ShortUrlService.API.Controllers.MVC
             };
             return View(model);
         }
-        [Route("setAbout")]
+        [Route("about/{token?}")]
         [HttpPost]
         public async Task<IActionResult> SetAbout(string text)
         {
             await _aboutService.SetAboutText(text);
-            ViewData["Message"] = "New text saved!";
-            return View("About");
+            About model = new About()
+            {
+                Text = await _aboutService.GetAboutText(),
+                Message = "About text updated successfully."
+            };
+            return View("About", model);
         }
     }
 }
